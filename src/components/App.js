@@ -1,38 +1,52 @@
-import React from 'react';
-import {data} from '../data';
+import React from "react";
+import { data } from "../data";
 
-import Navbar from './Navbar';
-import MovieCard from './MovieCard';
+import Navbar from "./Navbar";
+import MovieCard from "./MovieCard";
 
+class App extends React.Component {
+  componentDidMount() {
+    const { store } = this.props;
 
-function App() {
-  return (
-    <div className="App">
-     <Navbar />
+    store.subscribe(() => {
+      console.log("Updating");
 
-     <div className="main">
-       <div className="tabs">
-         <div className="tab">Movies</div>
+      this.forceUpdate();
+    });
 
-         <div className="tab">Favorite</div>
-       </div>
+    store.dispatch({
+      type: "ADD_MOVIES",
+      movies: data,
+    });
 
-       <div className="list">
+    console.log("State", this.props.store.getState());
+  }
 
-         {data.map(movie => (
+  render() {
+    const movies = this.props.store.getState();
 
-           <MovieCard movie={movie} />
+    console.log("Movies", movies);
 
-         ))}
+    return (
+      <div className="App">
+        <Navbar />
 
+        <div className="main">
+          <div className="tabs">
+            <div className="tab">Movies</div>
 
-       </div>
-       
+            <div className="tab">Favorite</div>
+          </div>
 
-
-     </div>
-    </div>
-  );
+          <div className="list">
+            {movies.map((movie, index) => (
+              <MovieCard movie={movie} key={`movies-${index}`} />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
