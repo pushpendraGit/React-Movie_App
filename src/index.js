@@ -5,10 +5,10 @@ import {createStore} from 'redux'
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./components/App";
-import movies from './reducers'
+import rootReducer from './reducers'
 
 
-const store = createStore(movies);
+const store = createStore(rootReducer);
 
 // console.log("Before action", store.getState());
 
