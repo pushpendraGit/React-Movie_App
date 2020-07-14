@@ -7,6 +7,10 @@ export const SET_SHOW_FAVOURITE = ' SET_SHOW_FAVOURITE';
 
 export const  ADD_MOVIE_TO_LIST = 'ADD_MOVIE_TO_LIST';
 
+export const  ADD_SEARCH_RESULT = 'ADD_SEARCH_RESULT';
+
+
+
 //these function are called action creater
 export function addMovies(movies){
 
@@ -70,8 +74,22 @@ export function addMovieToList(movie)
     .then(responce => responce.json())
     .then(movie =>{
         console.log('Searched move is', movie);
+
+        dispath(addMovieSearchResult(movie))
     })
 
    }
 
  }
+
+
+ export function addMovieSearchResult(movie){
+
+    return {
+  
+      type:ADD_SEARCH_RESULT,
+  
+      movie
+    }
+   }
+  

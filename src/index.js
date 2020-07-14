@@ -16,7 +16,13 @@ const logger = function ({dispatch, getState}){
 
     return function(action){
 
-     console.log('Action Type', action.type)
+      if(typeof action !== 'function')
+      {
+
+        console.log('Action Type', action.type)
+      }
+
+   
 
       next(action);
     }

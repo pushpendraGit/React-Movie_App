@@ -1,15 +1,20 @@
-
-import {combineReducers} from 'redux';
-import { ADD_MOVIES, ADD_TO_FAVOURITE, REMOVE_FROM_FAVOURITE,  SET_SHOW_FAVOURITE, ADD_MOVIE_TO_LIST} from "../actions";
+import { combineReducers } from "redux";
+import {
+  ADD_MOVIES,
+  ADD_TO_FAVOURITE,
+  REMOVE_FROM_FAVOURITE,
+  SET_SHOW_FAVOURITE,
+  ADD_MOVIE_TO_LIST,
+  ADD_SEARCH_RESULT
+} from "../actions";
 
 const initialMoviesState = {
   list: [],
   favourites: [],
-  showFavourites:false
-
+  showFavourites: false,
 };
 
-export  function movies(state = initialMoviesState, action) {
+export function movies(state = initialMoviesState, action) {
   // if(action.type === ADD_MOVIES)
   // {
 
@@ -28,73 +33,76 @@ export  function movies(state = initialMoviesState, action) {
         ...state,
 
         list: action.movies,
-      }
-
-      case ADD_TO_FAVOURITE:
-      return {
-        ...state,
-
-        favourites:[action.movie, ...state.favourites],
-        
       };
 
-      case REMOVE_FROM_FAVOURITE:
-
-      const filteredArray = state.favourites.filter(movie=> movie.Title !== action.movie.Title)
+    case ADD_TO_FAVOURITE:
       return {
         ...state,
 
-        favourites:filteredArray
+        favourites: [action.movie, ...state.favourites],
       };
 
-
-      case  SET_SHOW_FAVOURITE:
+    case REMOVE_FROM_FAVOURITE:
+      const filteredArray = state.favourites.filter(
+        (movie) => movie.Title !== action.movie.Title
+      );
       return {
         ...state,
 
-        showFavourites:action.val,
-      }
+        favourites: filteredArray,
+      };
 
+    case SET_SHOW_FAVOURITE:
+      return {
+        ...state,
 
-       
-      case ADD_MOVIE_TO_LIST:
+        showFavourites: action.val,
+      };
 
-           
+    case ADD_MOVIE_TO_LIST:
+      return {
+        ...state,
 
-        return{
+        list: [action.movie, ...state.list],
+      };
 
-            ...state,
-
-            list:[action.movie, ...state.list]
-        }
-
-
-
-      default:
-          return state;
+    default:
+      return state;
   }
 }
 
-const initialSearchState  = {
+const initialSearchState = {
+  result: {},
+  showSearchResults: false,
+};
 
-  result:{}
-}
+export function search(state = initialSearchState, action) {
+  switch (action.type) {
+    case ADD_SEARCH_RESULT:
+      return {
+        ...state,
 
-export function search(state=initialSearchState,action)
-{
+        result: action.movie,
 
-  return state;
+        showSearchResults: true,
+      };
 
+    case ADD_MOVIE_TO_LIST:
+      return {
+        ...state,
+
+        showSearchResults: false,
+      };
+
+    default:
+      return state;
+  }
 }
 
 const initialRootState = {
-
-  movies:initialMoviesState,
-  search:initialSearchState,
-  
-
-  
-}
+  movies: initialMoviesState,
+  search: initialSearchState,
+};
 
 // export default function rootReducer(state = initialRootState,action)
 // {
@@ -105,6 +113,6 @@ const initialRootState = {
 // }
 
 export default combineReducers({
-  movies:movies,
-  search:search
-})
+  movies: movies,
+  search: search,
+});
