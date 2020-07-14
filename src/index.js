@@ -2,6 +2,8 @@ import React from "react";
 
 import {createStore, applyMiddleware} from 'redux'
 
+import thunk from 'redux-thunk'
+
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./components/App";
@@ -24,9 +26,35 @@ const logger = function ({dispatch, getState}){
 
 
 
+//Now we have passed inbuilt thunk
 
 
-const store = createStore(combineReducers,applyMiddleware(logger));
+// const thunk = function ({dispatch, getState}){
+
+//   return function(next){
+
+//     return function(action){
+
+  
+
+//      if(typeof action === 'function')
+//      {
+//        action(dispatch);
+
+//        return;
+//      }
+
+//       next(action);
+//     }
+//   }
+// }
+
+
+
+
+
+
+const store = createStore(combineReducers,applyMiddleware(logger,thunk));
 
 // console.log("Before action", store.getState());
 

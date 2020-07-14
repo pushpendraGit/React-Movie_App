@@ -90,7 +90,8 @@ export function search(state=initialSearchState,action)
 const initialRootState = {
 
   movies:initialMoviesState,
-  search:initialSearchState
+  search:initialSearchState,
+  
 
   
 }
