@@ -1,6 +1,22 @@
 import React from 'react';
+import {addMovieToList} from '../actions'
 
 class Navbar extends React.Component {
+
+
+    handleAddToMovies = (movie) => {
+
+        this.props.dispatch(addMovieToList(movie));
+
+        this.setState({
+            showSearchResults:false
+        })
+
+        
+    }
+
+
+
     render() {
         return (
             <div className="nav">

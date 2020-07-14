@@ -5,6 +5,8 @@ export const REMOVE_FROM_FAVOURITE = 'REMOVE_FROM_FAVOURITE';
 
 export const SET_SHOW_FAVOURITE = ' SET_SHOW_FAVOURITE';
 
+export const  ADD_MOVIE_TO_LIST = 'ADD_MOVIE_TO_LIST';
+
 //these function are called action creater
 export function addMovies(movies){
 
@@ -44,3 +46,16 @@ export function setShowFavourite(val){
         
     }
 }
+
+
+export function addMovieToList(movie)
+ {
+
+    return(
+        {
+            type:ADD_MOVIE_TO_LIST,
+            movie
+          }
+    )
+
+ }

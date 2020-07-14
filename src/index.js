@@ -1,6 +1,6 @@
 import React from "react";
 
-import {createStore} from 'redux'
+import {createStore, applyMiddleware} from 'redux'
 
 import ReactDOM from "react-dom";
 import "./index.css";
@@ -8,7 +8,25 @@ import App from "./components/App";
 import combineReducers from './reducers'
 
 
-const store = createStore(combineReducers);
+const logger = function ({dispatch, getState}){
+
+  return function(next){
+
+    return function(action){
+
+     console.log('Action Type', action.type)
+
+      next(action);
+    }
+  }
+}
+
+
+
+
+
+
+const store = createStore(combineReducers,applyMiddleware(logger));
 
 // console.log("Before action", store.getState());
 
@@ -20,8 +38,6 @@ const store = createStore(combineReducers);
 
 
 // console.log("After action", store.getState());
-
-
 
 ReactDOM.render(
   <React.StrictMode>
