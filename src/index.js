@@ -5,10 +5,10 @@ import {createStore} from 'redux'
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./components/App";
-import rootReducer from './reducers'
+import combineReducers from './reducers'
 
 
-const store = createStore(rootReducer);
+const store = createStore(combineReducers);
 
 // console.log("Before action", store.getState());
 
