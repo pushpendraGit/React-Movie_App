@@ -1,31 +1,27 @@
 import React from "react";
 import { data } from "../data";
 
+import {connect} from 'react-redux';
+
 import Navbar from "./Navbar";
 import MovieCard from "./MovieCard";
-import {storeContext} from '../index'
+//import {storeContext,connect} from '../index'   //We have here used react-redux inbuilt connect functionn
 import { addMovies,setShowFavourite} from "../actions";
 
 
 class App extends React.Component {
   componentDidMount() {
-    const { store } = this.props;
+   
 
-    store.subscribe(() => {
-      console.log("Updating");
+    
 
-      this.forceUpdate();
-    });
-
-    store.dispatch(addMovies(data));
-
-    console.log("State", this.props.store.getState());
+    this.props.dispatch(addMovies(data));
   }
 
 
   isMovieFavourite = (movie)=>{
 
-    const {movies} = this.props.store.getState();
+    const {movies} = this.props;
 
     const index = movies.favourites.indexOf(movie);
 
@@ -39,19 +35,19 @@ class App extends React.Component {
 
   onChangeTab = (val) =>{
 
-    this.props.store.dispatch(setShowFavourite(val));
+    this.props.dispatch(setShowFavourite(val));
   }
 
   render() {
 
-    const {movies, search} = this.props.store.getState();
+    const {movies, search} = this.props;
     const { list, favourites, showFavourites } = movies;
 
     console.log('check',showFavourites);
 
     const displayMovies = showFavourites ?  favourites : list;
 
-    console.log('State', this.props.store.getState());
+    //console.log('State', this.props.store.getState());
 
 
     return (
@@ -69,7 +65,7 @@ class App extends React.Component {
             {displayMovies.map((movie, index) => (
               <MovieCard movie={movie} 
               key={`movies-${index}`}  
-              dispatch={this.props.store.dispatch} 
+              dispatch={this.props.dispatch} 
 
               isFavourite = {this.isMovieFavourite(movie)}
               
@@ -83,18 +79,32 @@ class App extends React.Component {
   }
 }
 
-class AppWrapper extends React.Component{
 
-  render(){
+//connect functtion is used is this place
+// class AppWrapper extends React.Component{
 
-    return(
-      <storeContext.Consumer>
-        {(store) => 
-        <App store={store}/>
-        }
-      </storeContext.Consumer>
-    )
+//   render(){
+
+//     return(
+//       <storeContext.Consumer>
+//         {(store) => 
+//         <App store={store}/>
+//         }
+//       </storeContext.Consumer>
+//     )
+//   }
+// }
+
+function mapStateToProps(state){
+
+  return {
+
+    movies:state.movies,
+    search:state.search
   }
 }
 
-export default AppWrapper;
+
+const connectedAppComponent = connect(mapStateToProps)(App)
+
+export default connectedAppComponent ;

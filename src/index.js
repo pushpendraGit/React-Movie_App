@@ -2,6 +2,9 @@ import React, { createContext } from "react";
 
 import { createStore, applyMiddleware } from "redux";
 
+import {Provider} from 'react-redux';
+
+
 import thunk from "redux-thunk";
 
 import ReactDOM from "react-dom";
@@ -50,18 +53,65 @@ const store = createStore(combineReducers, applyMiddleware(logger, thunk));
 //   movies:["m1", "m2", "m3"]
 // })
 
-export const storeContext = createContext();
+// export const storeContext = createContext();
 
-class Provider extends React.Component {
-  render(){
+// class Provider extends React.Component {
+//   render() {
+//     const { store } = this.props;
 
-    const {store}  = this.props;
+//     return (
+//       <storeContext.Provider value={store}>
+//         {this.props.children}
+//       </storeContext.Provider>
+//     );
+//   }
+// }
 
-    return <storeContext.Provider value={store}>
-      {this.props.children}
-    </storeContext.Provider>
-    }
-}
+
+// const connectedComponent = connect(callback)(App);
+
+//Here we will use react-redux connect function
+
+
+// export function connect(callback) {
+//   return function (Component) {
+//     class ConnectedComponent extends React.Component {
+//       constructor(props) {
+//         super(props);
+//         this.unsubscribe = this.props.store.subscribe(() => {
+//           this.forceUpdate();
+//         });
+//       }
+
+//       componentWillUnmount() {
+//         this.unsubscribe();
+//       }
+//       render() {
+//         const { store } = this.props;
+//         const state = store.getState();
+//         const dataToBeSentAsProps = callback(state);
+
+//         return <Component dispatch={store.dispatch} {...dataToBeSentAsProps} />;
+//       }
+//     }
+
+//     class ConnectedComponentWrapper extends React.Component {
+//       render() {
+//         return (
+//           <storeContext.Consumer>
+//             {(store) => {
+//               return <ConnectedComponent store={store} />;
+//             }}
+//           </storeContext.Consumer>
+//         );
+//       }
+//     }
+//     return ConnectedComponentWrapper;
+//   };
+// }
+
+
+
 
 // console.log("After action", store.getState());
 

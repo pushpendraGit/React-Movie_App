@@ -63,25 +63,18 @@ export function addMovieToList(movie)
     )
 
  }
-
- export function handleMovieSearch(movie){
-
-    const url = `http://www.omdbapi.com/?apikey=3ca5df7&t=${movie}`;
-
-   return function(dispath){
-
-    fetch(url)
-    .then(responce => responce.json())
-    .then(movie =>{
-        console.log('Searched move is', movie);
-
-        dispath(addMovieSearchResult(movie))
-    })
-
-   }
-
- }
-
+ export function handleMovieSearch(movie) {
+    return function (dispatch) {
+      const url = `http://www.omdbapi.com/?apikey=3ca5df7&t=${movie}`;
+      fetch(url)
+        .then((response) => response.json())
+        .then((movie) => {
+          console.log('movie', movie);
+          // dispatch action to save search results in store
+          dispatch(addMovieSearchResult(movie));
+        });
+    };
+  }
 
  export function addMovieSearchResult(movie){
 
